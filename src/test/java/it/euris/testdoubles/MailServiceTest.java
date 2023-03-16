@@ -45,7 +45,6 @@ public class MailServiceTest {
             PressureLog pressureLog=new PressureLog(new Long(i), startDate.plusDays(i),100);
             pressureLogList.add(pressureLog);
         }
-
         Patient patient=new Patient(
                 new Long(1),
                 "nome",
@@ -60,8 +59,13 @@ public class MailServiceTest {
         //act
         //non sono interessato alla logica di aggiunta paziente
         doctorService.addPatientToDoctor(patient,doctor);
+        String message=mailService.sendNotifications(doctor);
         //assert
-        assertNotEquals(mailService.sendNotifications(doctor), "");
+
+        assertNotEquals(message, "");
+        assertTrue(message.contains("OUT OF RANGE:"));
+        assertFalse(message.contains("NO RESPONSE:"));
+
         doctorService.verify();
     }
 
