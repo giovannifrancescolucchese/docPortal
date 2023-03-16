@@ -41,6 +41,40 @@ public class DoctorServiceTest {
 
     //STUB
     @Test
+    void givenPatientOutOfRangeThenPatientsOutOfRangeListIsNotEmpty() {
+        //arrange
+        doctorService=new DoctorServiceImpl(patientService, doctorMatrixService);
+
+        PressureLog log1=new PressureLog(1L, LocalDate.now().minusDays(10), 200);
+        PressureLog log2=new PressureLog(2L, LocalDate.now().minusDays(9), 200);
+        PressureLog log3=new PressureLog(3L, LocalDate.now().minusDays(8), 200);
+        List<PressureLog> logs=new ArrayList<>();
+        logs.add(log1);
+        logs.add(log2);
+        logs.add(log3);
+        PressureDevice pressureDevice=new PressureDevice(1L, logs);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                pressureDevice
+        );
+        List<Patient> patientList=new ArrayList<>();
+        patientList.add(patient);
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
+        //act
+        List patientsOutOfRange=doctorService.getPatientsOutOfRange(doctor);
+        //assert
+        assertFalse(patientsOutOfRange.isEmpty());
+        assertEquals(patientsOutOfRange.size(),1);
+
+    }
+
+    @Test
     void givenPatientNoResponseThenPatientsNoResponseListIsNotEmpty() {
         //arrange
         doctorService=new DoctorServiceImpl(patientService, doctorMatrixService);
@@ -69,8 +103,6 @@ public class DoctorServiceTest {
         assertEquals(patientsNoResponse.size(),1);
 
     }
-
-
 
 
 
