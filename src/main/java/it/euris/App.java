@@ -46,7 +46,7 @@ public class App
                     "indirizzo",
                     "email",
                     'M',
-                    LocalDate.of(1915, Month.JULY, 29),
+                    LocalDate.of(2000, Month.JULY, 29),
                     pressureDevice
                     );
             System.out.println(String.format("Associazione paziente %d al dottore...",i));
