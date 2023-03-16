@@ -26,7 +26,6 @@ public class DoctorServiceTest {
     PatientService FalsepatientServiceStub;
     PatientService TruepatientServiceStub;
     DoctorService doctorService;
-
     PressureDeviceService pressureDeviceService;
     DoctorMatrixService doctorMatrixService;
 
