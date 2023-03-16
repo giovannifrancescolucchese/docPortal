@@ -19,13 +19,13 @@ public class MailServiceImpl implements MailService{
         String mailnotification="";
         String outOfRange=notificationService.prepareNotificationOutOfRange(doctorService.getPatientsOutOfRange(doctor));
         String noResponse=notificationService.prepareNotificationNoResponse(doctorService.getPatientsNoResponse(doctor));
-        if (outOfRange!=null || noResponse!=null) {
+        if (outOfRange!="" || noResponse!="") {
         mailnotification+="INVIO NOTIFICHE: \n";
-            if (outOfRange!=null) {
+            if (outOfRange!="") {
                 mailnotification+="OUT OF RANGE: \n";
                 mailnotification+=outOfRange+"\n";
             }
-            if (noResponse!=null) {
+            if (noResponse!="") {
                 mailnotification+="NO RESPONSE: \n";
                 mailnotification+=noResponse+"\n";
             }

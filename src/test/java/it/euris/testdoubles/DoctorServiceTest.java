@@ -23,28 +23,27 @@ import java.util.List;
 public class DoctorServiceTest {
 
     PatientService patientService;
-    PatientService FalsepatientServiceStub;
-    PatientService TruepatientServiceStub;
+    PatientService patientServiceStub;
     DoctorService doctorService;
+
     PressureDeviceService pressureDeviceService;
-    DoctorMatrixService doctorMatrixService;
+    DoctorMatrixService doctorMatrixServiceDummy;
 
     @BeforeEach
     void setup() {
 
         //patientService=new PatientServiceStub(false);
-        FalsepatientServiceStub =new PatientServiceStub(false);
-        TruepatientServiceStub=new PatientServiceStub(true);
+
         pressureDeviceService=new PressureDeviceServiceDummy();
         patientService=new PatientServiceImpl(pressureDeviceService);
-        doctorMatrixService=new DoctorMatrixServiceDummy();
+        doctorMatrixServiceDummy =new DoctorMatrixServiceDummy();
     }
 
     //STUB
     @Test
     void givenPatientNoResponseThenPatientsNoResponseListIsNotEmpty() {
         //arrange
-        doctorService=new DoctorServiceImpl(patientService, doctorMatrixService);
+        doctorService=new DoctorServiceImpl(patientService, doctorMatrixServiceDummy);
         PressureLog log=new PressureLog(1L, LocalDate.now().minusDays(10), 123);
         List<PressureLog> logs=new ArrayList<>();
         logs.add(log);
@@ -72,7 +71,8 @@ public class DoctorServiceTest {
     @Test
     void givenPatientNoResponseThenPatientsNoResponseListIsNotEmptyWithStub() {
         //arrange
-        doctorService=new DoctorServiceImpl(FalsepatientServiceStub, doctorMatrixService);
+        patientServiceStub=new PatientServiceStub(false);
+        doctorService=new DoctorServiceImpl(patientServiceStub, doctorMatrixServiceDummy);
         Patient patient=new Patient(
                 new Long(1),
                 "nome",
@@ -94,16 +94,10 @@ public class DoctorServiceTest {
     }
 
     @Test
-    void givenPatientOutOfRangeThenPatientOutOfRangeListIsNotEmptyWithStub(){
-        doctorService=new DoctorServiceImpl(TruepatientServiceStub, doctorMatrixService);
-        PressureLog log1=new PressureLog(1L, LocalDate.now().minusDays(10), 200);
-        PressureLog log2=new PressureLog(1L, LocalDate.now().minusDays(9), 200);
-        PressureLog log3=new PressureLog(1L, LocalDate.now().minusDays(8), 200);
-        List<PressureLog> logs=new ArrayList<>();
-        logs.add(log1);
-        logs.add(log2);
-        logs.add(log3);
-        PressureDevice pressureDevice=new PressureDevice(1L, logs);
+    void givenPatientNoResponseThenPatientsNoResponseListIsEmptyWithStub() {
+        //arrange
+        patientServiceStub=new PatientServiceStub(true);
+        doctorService=new DoctorServiceImpl(patientServiceStub, doctorMatrixServiceDummy);
         Patient patient=new Patient(
                 new Long(1),
                 "nome",
@@ -112,15 +106,18 @@ public class DoctorServiceTest {
                 "email",
                 'M',
                 LocalDate.of(1915, Month.JULY, 29),
-                pressureDevice
+                null
         );
         List<Patient> patientList=new ArrayList<>();
         patientList.add(patient);
         Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
-        List patientsOutOfRange=doctorService.getPatientsOutOfRange(doctor);
-        assertFalse(patientsOutOfRange.isEmpty());
-        assertEquals(patientsOutOfRange.size(),1);
+        //act
+        List patientsNoResponse=doctorService.getPatientsNoResponse(doctor);
+        //assert
+        assertTrue(patientsNoResponse.isEmpty());
+        assertEquals(patientsNoResponse.size(),0);
     }
 
 
-}
+
+    }

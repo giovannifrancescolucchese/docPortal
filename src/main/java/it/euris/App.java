@@ -41,8 +41,8 @@ public class App
             }
             Patient patient=new Patient(
                     new Long(i),
-                    "nome",
-                    "cognome",
+                    "nome"+i,
+                    "cognome"+i,
                     "indirizzo",
                     "email",
                     'M',
@@ -54,6 +54,7 @@ public class App
                 System.out.println(String.format("Associato paziente %d al dottore...",i));
             else System.out.println(String.format("NON è stato possibile associare il paziente %d al dottore...",i));
         }
+        System.out.println("***********************************************************************");
         System.out.println(mailService.sendNotifications(doctor));
     }
 }
