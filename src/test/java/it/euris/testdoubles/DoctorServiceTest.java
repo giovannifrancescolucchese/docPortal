@@ -24,6 +24,7 @@ import java.util.List;
 public class DoctorServiceTest {
 
     PatientService patientService;
+    PatientService patientServiceStub;
     DoctorService doctorService;
 
     PressureDeviceService pressureDeviceService;
@@ -33,7 +34,7 @@ public class DoctorServiceTest {
     void setup() {
 
         //patientService=new PatientServiceStub(false);
-        //patientService=new PatientServiceStub(false);
+        patientServiceStub=new PatientServiceStub(false);
         pressureDeviceService=new PressureDeviceServiceDummy();
         patientService=new PatientServiceImpl(pressureDeviceService);
         doctorMatrixService=new DoctorMatrixServiceDummy();
@@ -44,7 +45,6 @@ public class DoctorServiceTest {
     void givenPatientNoResponseThenPatientsNoResponseListIsNotEmpty() {
         //arrange
         doctorService=new DoctorServiceImpl(patientService, doctorMatrixService);
-
         PressureLog log=new PressureLog(1L, LocalDate.now().minusDays(10), 123);
         List<PressureLog> logs=new ArrayList<>();
         logs.add(log);
@@ -67,9 +67,31 @@ public class DoctorServiceTest {
         //assert
         assertFalse(patientsNoResponse.isEmpty());
         assertEquals(patientsNoResponse.size(),1);
-
     }
 
+    @Test
+    void givenPatientNoResponseThenPatientsNoResponseListIsNotEmptyWithStub() {
+        //arrange
+        doctorService=new DoctorServiceImpl(patientServiceStub, doctorMatrixService);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                null
+        );
+        List<Patient> patientList=new ArrayList<>();
+        patientList.add(patient);
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
+        //act
+        List patientsNoResponse=doctorService.getPatientsNoResponse(doctor);
+        //assert
+        assertFalse(patientsNoResponse.isEmpty());
+        assertEquals(patientsNoResponse.size(),1);
+    }
 
 
 
