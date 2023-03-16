@@ -6,7 +6,6 @@ import it.euris.model.Doctor;
 import it.euris.model.Patient;
 import it.euris.model.PressureDevice;
 import it.euris.model.PressureLog;
-import it.euris.service.doctor.DoctorService;
 import it.euris.service.mail.MailService;
 import it.euris.service.mail.MailServiceImpl;
 import it.euris.service.notification.NotificationService;
@@ -24,6 +23,7 @@ public class MailServiceTest {
 
 
     DoctorServiceMock doctorService;
+    DoctorServiceStub doctorServiceStub;
     NotificationService notificationService;
 
 
@@ -31,6 +31,7 @@ public class MailServiceTest {
     void setup() {
         doctorService=new DoctorServiceMock();
         notificationService=new NotificationServiceImpl();
+        doctorServiceStub=new DoctorServiceStub();
     }
 
 
@@ -63,6 +64,14 @@ public class MailServiceTest {
         //assert
         assertNotEquals(mailService.sendNotifications(doctor), "");
         doctorService.verify();
+    }
+
+    @Test
+    void givenPatientsNoResponseNotNullSendMailNotification(){
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", null, true);
+
+        MailService mailService=new MailServiceImpl(notificationService, doctorServiceStub);
+        assertNotEquals(mailService.sendNotifications(doctor), "");
     }
 
 

@@ -9,7 +9,6 @@ import it.euris.model.PressureLog;
 import it.euris.service.doctor.DoctorService;
 import it.euris.service.doctor.DoctorServiceImpl;
 import it.euris.service.doctorMatrix.DoctorMatrixService;
-import it.euris.service.doctorMatrix.DoctorMatrixServiceImpl;
 import it.euris.service.patient.PatientService;
 import it.euris.service.patient.PatientServiceImpl;
 import it.euris.service.pressureDevice.PressureDeviceService;
@@ -24,7 +23,8 @@ import java.util.List;
 public class DoctorServiceTest {
 
     PatientService patientService;
-    PatientService patientServiceStub;
+    PatientService FalsepatientServiceStub;
+    PatientService TruepatientServiceStub;
     DoctorService doctorService;
 
     PressureDeviceService pressureDeviceService;
@@ -34,7 +34,8 @@ public class DoctorServiceTest {
     void setup() {
 
         //patientService=new PatientServiceStub(false);
-        patientServiceStub=new PatientServiceStub(false);
+        FalsepatientServiceStub =new PatientServiceStub(false);
+        TruepatientServiceStub=new PatientServiceStub(true);
         pressureDeviceService=new PressureDeviceServiceDummy();
         patientService=new PatientServiceImpl(pressureDeviceService);
         doctorMatrixService=new DoctorMatrixServiceDummy();
@@ -72,7 +73,7 @@ public class DoctorServiceTest {
     @Test
     void givenPatientNoResponseThenPatientsNoResponseListIsNotEmptyWithStub() {
         //arrange
-        doctorService=new DoctorServiceImpl(patientServiceStub, doctorMatrixService);
+        doctorService=new DoctorServiceImpl(FalsepatientServiceStub, doctorMatrixService);
         Patient patient=new Patient(
                 new Long(1),
                 "nome",
@@ -93,7 +94,34 @@ public class DoctorServiceTest {
         assertEquals(patientsNoResponse.size(),1);
     }
 
-
-
-
+    @Test
+    void givenPatientOutOfRangeThenPatientOutOfRangeListIsNotEmptyWithStub(){
+        doctorService=new DoctorServiceImpl(TruepatientServiceStub, doctorMatrixService);
+        PressureLog log1=new PressureLog(1L, LocalDate.now().minusDays(10), 200);
+        PressureLog log2=new PressureLog(1L, LocalDate.now().minusDays(9), 200);
+        PressureLog log3=new PressureLog(1L, LocalDate.now().minusDays(8), 200);
+        List<PressureLog> logs=new ArrayList<>();
+        logs.add(log1);
+        logs.add(log2);
+        logs.add(log3);
+        PressureDevice pressureDevice=new PressureDevice(1L, logs);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                pressureDevice
+        );
+        List<Patient> patientList=new ArrayList<>();
+        patientList.add(patient);
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
+        List patientsOutOfRange=doctorService.getPatientsOutOfRange(doctor);
+        assertFalse(patientsOutOfRange.isEmpty());
+        assertEquals(patientsOutOfRange.size(),1);
     }
+
+
+}
