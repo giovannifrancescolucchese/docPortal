@@ -6,7 +6,6 @@ import it.euris.service.doctorMatrix.DoctorMatrixService;
 import it.euris.service.patient.PatientService;
 
 import java.util.ArrayList;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 
 public class DoctorServiceImpl implements DoctorService {
@@ -21,7 +20,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public boolean addPatientToDoctor(Patient patient, Doctor doctor) {
-        boolean canAdd=false;
+        boolean canAdd = false;
         if (doctor.getMorePatients()) {
             canAdd = doctorMatrixService.canAddPatientToDoctor(patient, doctor);
             if (canAdd)
@@ -33,7 +32,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Patient> getPatientsOutOfRange(Doctor doctor) {
-        List<Patient> patients=new ArrayList<>();
+        List<Patient> patients = new ArrayList<>();
         for (Patient patient : doctor.getPatients()) {
             if (patientService.last3MeasuresOutOfRange(patient)) patients.add(patient);
         }
@@ -42,7 +41,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Patient> getPatientsNoResponse(Doctor doctor) {
-        List<Patient> patients=new ArrayList<>();
+        List<Patient> patients = new ArrayList<>();
         for (Patient patient : doctor.getPatients()) {
             if (!patientService.haveResponsefromDeviceinLast5days(patient)) patients.add(patient);
         }

@@ -7,5 +7,6 @@ import java.time.LocalDate;
 
 public class PressureDeviceServiceDummy implements PressureDeviceService {
     @Override
-    public void deleteLogsBeforeDate(LocalDate date, PressureDevice pressureDevice) {}
+    public void deleteLogsBeforeDate(LocalDate date, PressureDevice pressureDevice) {
+    }
 }

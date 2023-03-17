@@ -6,7 +6,8 @@ import it.euris.service.doctorMatrix.DoctorMatrixService;
 
 public class DoctorMatrixServiceSpy implements DoctorMatrixService {
 
-    int counter=0;
+    int counter = 0;
+
     @Override
     public boolean canAddPatientToDoctor(Patient patient, Doctor doctor) {
         counter++;

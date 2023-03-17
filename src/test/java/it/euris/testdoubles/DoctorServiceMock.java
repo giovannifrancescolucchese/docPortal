@@ -10,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DoctorServiceMock implements DoctorService {
-    private List<Patient> patientList=new ArrayList<>();
+    private List<Patient> patientList = new ArrayList<>();
 
     @Override
     public boolean addPatientToDoctor(Patient patient, Doctor doctor) {
@@ -30,6 +30,6 @@ public class DoctorServiceMock implements DoctorService {
 
 
     public void verify() {
-        assertThat(patientList.size()>0);
+        assertThat(patientList.size() > 0);
     }
 }

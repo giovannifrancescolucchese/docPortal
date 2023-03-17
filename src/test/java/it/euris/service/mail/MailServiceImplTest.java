@@ -1,4 +1,5 @@
-package it.euris.service.mail;import static org.junit.jupiter.api.Assertions.*;
+package it.euris.service.mail;
+
 class MailServiceImplTest {
-  
+
 }

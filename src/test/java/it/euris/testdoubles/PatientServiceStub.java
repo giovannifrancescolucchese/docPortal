@@ -5,8 +5,9 @@ import it.euris.service.patient.PatientService;
 
 public class PatientServiceStub implements PatientService {
     private boolean response;
+
     PatientServiceStub(boolean value) {
-        this.response=value;
+        this.response = value;
     }
 
     @Override

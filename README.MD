@@ -1,7 +1,9 @@
 # Doctors
+
 ## _Applicazione per dottori di base_
 
 Il numero massimo di pazienti associabili ad un dottore dipende dall'età media di questi:
+
 - età media [0, 50]    -> max pazienti: 80
 - età media [51, 60]   -> max pazienti: 70
 - età media [61, 70]   -> max pazienti: 60
@@ -11,8 +13,10 @@ Si presume che ogni paziente abbia un dispositivo per la misurazione della press
 Questo dispositivo comunica in maniera automatica le misurazioni sul database (condiviso tra app e dispositivo)
 
 L'applicazione ha lo scopo di permette ai dottori:
+
 - di gestire l'anagrafica dei propri pazienti
-- di essere informati se i valori delle ultime tre misurazioni del device sono al di fuori degli intervalli valori indicati nella tabella
+- di essere informati se i valori delle ultime tre misurazioni del device sono al di fuori degli intervalli valori
+  indicati nella tabella
 
 | ETA'     | SESSO | RANGE PRESSIONE |
 |----------|-------|-----------------|
@@ -25,4 +29,5 @@ L'applicazione ha lo scopo di permette ai dottori:
 | [61, 70] | M     | [85, 120]       |
 | oltre 70 | M     | [80, 120]       |
 
-- se non c'è comunicazione per un paziente negli ultimi 5 gg (nessuna misurazione dal dispositivo) viene inviata una email al dottore associato al paziente
+- se non c'è comunicazione per un paziente negli ultimi 5 gg (nessuna misurazione dal dispositivo) viene inviata una
+  email al dottore associato al paziente

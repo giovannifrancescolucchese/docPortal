@@ -1,6 +1,7 @@
 package it.euris.model;
 
-import lombok.AllArgsConstructor;import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
 

@@ -1,4 +1,5 @@
-package it.euris.service.notification;import static org.junit.jupiter.api.Assertions.*;
+package it.euris.service.notification;
+
 class NotificationServiceImplTest {
-  
+
 }

@@ -12,13 +12,13 @@ public class DoctorMatrixServiceImpl implements DoctorMatrixService {
                 .stream()
                 .mapToInt(Patient::getAge)
                 .summaryStatistics();
-        double averageAge=stats.getAverage();
-        if (    ((averageAge>=0) && (averageAge<=50) && doctor.getPatients().size()<80) ||
-                ((averageAge>50) && (averageAge<=60) && doctor.getPatients().size()<70) ||
-                ((averageAge>60) && (averageAge<=70) && doctor.getPatients().size()<60) ||
-                ((averageAge>70) && doctor.getPatients().size()<50)
+        double averageAge = stats.getAverage();
+        if (((averageAge >= 0) && (averageAge <= 50) && doctor.getPatients().size() < 80) ||
+                ((averageAge > 50) && (averageAge <= 60) && doctor.getPatients().size() < 70) ||
+                ((averageAge > 60) && (averageAge <= 70) && doctor.getPatients().size() < 60) ||
+                ((averageAge > 70) && doctor.getPatients().size() < 50)
         ) return true;
-    return false;
+        return false;
     }
 
 

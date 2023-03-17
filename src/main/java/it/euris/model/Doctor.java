@@ -1,7 +1,6 @@
 package it.euris.model;
 
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
