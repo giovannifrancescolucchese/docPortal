@@ -92,7 +92,7 @@ public class PatientServiceTest {
         pressureLogs.add(pressureLog1);
         pressureLogs.add(pressureLog2);
 
-        patientService=new PatientServiceImpl(this.pressureDevice);
+        patientService= new PatientServiceImpl(this.pressureDevice);
       //  Mockito
     }
 
