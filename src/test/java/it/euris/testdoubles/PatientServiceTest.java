@@ -48,5 +48,56 @@ public class PatientServiceTest {
         assertFalse(patientService.haveResponsefromDeviceinLast5days(patient));
     }
 
+    @Test
+    void givenPatientWithLast3MeasuresOutOfRangeWhenCheckingThenExpectedTrue(){
+        //arrange
+        PressureDevice pressureDevice=new PressureDevice(new Long(1),new ArrayList<>());
+        PressureLog pressureLog1=new PressureLog(new Long(1), LocalDate.now().minusDays(3),200);
+        PressureLog pressureLog2=new PressureLog(new Long(1), LocalDate.now().minusDays(2),200);
+        PressureLog pressureLog3=new PressureLog(new Long(1), LocalDate.now().minusDays(1),200);
+        pressureDevice.getPressureLogs().add(pressureLog1);
+        pressureDevice.getPressureLogs().add(pressureLog2);
+        pressureDevice.getPressureLogs().add(pressureLog3);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                pressureDevice
+        );
+        //act
+        patientService=new PatientServiceImpl(pressureDeviceService);
+        //assert
+        assertTrue(patientService.last3MeasuresOutOfRange(patient));
+    }
 
+
+    @Test
+    void givenPatientWithLast3MeasuresInRangeWhenCheckingThenExpectedFalse(){
+        //arrange
+        PressureDevice pressureDevice=new PressureDevice(new Long(1),new ArrayList<>());
+        PressureLog pressureLog1=new PressureLog(new Long(1), LocalDate.now().minusDays(3),100);
+        PressureLog pressureLog2=new PressureLog(new Long(1), LocalDate.now().minusDays(2),100);
+        PressureLog pressureLog3=new PressureLog(new Long(1), LocalDate.now().minusDays(1),100);
+        pressureDevice.getPressureLogs().add(pressureLog1);
+        pressureDevice.getPressureLogs().add(pressureLog2);
+        pressureDevice.getPressureLogs().add(pressureLog3);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'F',
+                LocalDate.of(1915, Month.JULY, 29),
+                pressureDevice
+        );
+        //act
+        patientService=new PatientServiceImpl(pressureDeviceService);
+        //assert
+        assertFalse(patientService.last3MeasuresOutOfRange(patient));
+    }
 }

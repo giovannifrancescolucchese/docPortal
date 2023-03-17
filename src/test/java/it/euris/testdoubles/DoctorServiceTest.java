@@ -118,6 +118,85 @@ public class DoctorServiceTest {
         assertEquals(patientsNoResponse.size(),0);
     }
 
-
-
+    @Test
+    void givenPatientOutOfRangeThenPatientsOutOfRangeListIsNotEmptyWithStub() {
+        //arrange
+        patientServiceStub=new PatientServiceStub(true);
+        doctorService=new DoctorServiceImpl(patientServiceStub, doctorMatrixServiceDummy);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                null
+        );
+        List<Patient> patientList=new ArrayList<>();
+        patientList.add(patient);
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
+        //act
+        List patientsOutOfRange=doctorService.getPatientsOutOfRange(doctor);
+        //assert
+        assertFalse(patientsOutOfRange.isEmpty());
+        assertEquals(patientsOutOfRange.size(),1);
     }
+
+
+    @Test
+    void givenPatientOutOfRangeThenPatientsOutOfRangeListIsEmptyWithStub() {
+        //arrange
+        patientServiceStub=new PatientServiceStub(false);
+        doctorService=new DoctorServiceImpl(patientServiceStub, doctorMatrixServiceDummy);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                null
+        );
+        List<Patient> patientList=new ArrayList<>();
+        patientList.add(patient);
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
+        //act
+        List patientsOutOfRange=doctorService.getPatientsOutOfRange(doctor);
+        //assert
+        assertTrue(patientsOutOfRange.isEmpty());
+        assertEquals(patientsOutOfRange.size(),0);
+    }
+
+    @Test
+    void givenPatientOutOfRangeThenPatientsOutOfRangeListIsNotEmpty() {
+        //arrange
+        doctorService=new DoctorServiceImpl(patientService, doctorMatrixServiceDummy);
+        PressureDevice pressureDevice=new PressureDevice(new Long(1),new ArrayList<>());
+        PressureLog pressureLog1=new PressureLog(new Long(1), LocalDate.now().minusDays(3),200);
+        PressureLog pressureLog2=new PressureLog(new Long(1), LocalDate.now().minusDays(2),200);
+        PressureLog pressureLog3=new PressureLog(new Long(1), LocalDate.now().minusDays(1),200);
+        pressureDevice.getPressureLogs().add(pressureLog1);
+        pressureDevice.getPressureLogs().add(pressureLog2);
+        pressureDevice.getPressureLogs().add(pressureLog3);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                pressureDevice
+        );
+        List<Patient> patientList=new ArrayList<>();
+        patientList.add(patient);
+        Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", patientList, true);
+        //act
+        List patientsOutOfRange=doctorService.getPatientsOutOfRange(doctor);
+        //assert
+        assertFalse(patientsOutOfRange.isEmpty());
+        assertEquals(patientsOutOfRange.size(),1);
+    }
+}
