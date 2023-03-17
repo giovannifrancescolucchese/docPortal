@@ -74,8 +74,9 @@ public class MailServiceTest {
     void givenPatientsNoResponseNotNullSendMailNotification(){
         //arrange
         Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", null, true);
-
+        //act
         MailService mailService=new MailServiceImpl(notificationService, doctorServiceStub);
+        //assert
         assertNotEquals(mailService.sendNotifications(doctor), "");
     }
 
