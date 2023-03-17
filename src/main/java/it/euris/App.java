@@ -33,7 +33,7 @@ public class App
         System.out.println( "Associazione pazienti..." );
         for (int i=0;i<=100;i++) {
             PressureDevice pressureDevice=new PressureDevice(new Long(i),new ArrayList<>());
-            LocalDate startMeasures=LocalDate.of(2022, Month.MARCH,16);
+            LocalDate startMeasures=LocalDate.of(2022, Month.MARCH,17);
             for (int j=1;j<=365;j++) {
                 PressureLog pressureLog=new PressureLog(new Long(j), startMeasures,200);
                 pressureDevice.getPressureLogs().add(pressureLog);
@@ -46,7 +46,7 @@ public class App
                     "indirizzo",
                     "email",
                     'M',
-                    LocalDate.of(2000, Month.JULY, 29),
+                    LocalDate.of(1915, Month.JULY, 29),
                     pressureDevice
                     );
             System.out.println(String.format("Associazione paziente %d al dottore...",i));
