@@ -49,4 +49,31 @@ public class PatientServiceTest {
     }
 
 
+    @Test
+    void givenPatientWithPressureLogsin5DaysThenReturnTrue() {
+        //arrange
+        PressureDevice pressureDevice=new PressureDevice(new Long(1),new ArrayList<>());
+        PressureLog pressureLog=new PressureLog(new Long(1), LocalDate.now().minusDays(4),200);
+        pressureDevice.getPressureLogs().add(pressureLog);
+        Patient patient=new Patient(
+                new Long(1),
+                "nome",
+                "cognome",
+                "indirizzo",
+                "email",
+                'M',
+                LocalDate.of(1915, Month.JULY, 29),
+                pressureDevice
+        );
+        //act
+        patientService=new PatientServiceImpl(pressureDeviceService);
+        //assert
+        assertTrue(patientService.haveResponsefromDeviceinLast5days(patient));
+    }
+
+
+
+
+
+
 }
