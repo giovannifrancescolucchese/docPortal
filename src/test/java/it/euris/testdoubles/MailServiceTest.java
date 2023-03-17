@@ -72,6 +72,7 @@ public class MailServiceTest {
 
     @Test
     void givenPatientsNoResponseNotNullSendMailNotification(){
+        //arrange
         Doctor doctor=new Doctor(1L, "nomeDottore","cognomeDotttore","Via Garibaldi 1", "dottore@email.it", null, true);
 
         MailService mailService=new MailServiceImpl(notificationService, doctorServiceStub);
