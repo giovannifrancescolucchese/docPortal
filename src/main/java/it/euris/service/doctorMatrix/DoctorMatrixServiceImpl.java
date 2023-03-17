@@ -15,7 +15,8 @@ public class DoctorMatrixServiceImpl implements DoctorMatrixService {
         double averageAge=stats.getAverage();
         if (    ((averageAge>=0) && (averageAge<=50) && doctor.getPatients().size()<80) ||
                 ((averageAge>50) && (averageAge<=60) && doctor.getPatients().size()<70) ||
-                ((averageAge>60) && (averageAge<=70) && doctor.getPatients().size()<60)
+                ((averageAge>60) && (averageAge<=70) && doctor.getPatients().size()<60) ||
+                ((averageAge>70) && doctor.getPatients().size()<50)
         ) return true;
     return false;
     }

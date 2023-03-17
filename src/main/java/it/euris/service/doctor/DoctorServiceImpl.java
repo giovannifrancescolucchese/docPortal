@@ -24,9 +24,10 @@ public class DoctorServiceImpl implements DoctorService {
         boolean canAdd=false;
         if (doctor.getMorePatients()) {
             canAdd = doctorMatrixService.canAddPatientToDoctor(patient, doctor);
-            if (canAdd) doctor.getPatients().add(patient);
-            else doctor.setMorePatients(false);
+            if (canAdd)
+                doctor.getPatients().add(patient);
         }
+        doctor.setMorePatients(canAdd);
         return canAdd;
     }
 
