@@ -3,6 +3,7 @@ package it.euris.model;
 import lombok.AllArgsConstructor;import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +19,8 @@ public class Patient {
 
 
     public int getAge() {
-       return LocalDate.now().getYear()-this.birthDate.getYear();
+        return ((Long)ChronoUnit.YEARS.between(this.birthDate, LocalDate.now())).intValue();
+        //return LocalDate.now().getYear()-this.birthDate.getYear();
     }
 
 }
